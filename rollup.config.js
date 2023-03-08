@@ -17,6 +17,6 @@ module.exports = [
         sourceMap: false,
       }),
     ],
-    // external: [],
+    external: ['react/jsx-runtime'],
   },
 ];
