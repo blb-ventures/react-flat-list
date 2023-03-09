@@ -3,7 +3,7 @@ import { FlatListItem } from './flat-list-item';
 
 export interface FlatListErrorMessageProps {
   children: ReactNode;
-  icon: ReactNode;
+  icon?: ReactNode;
   className?: string;
 }
 
@@ -14,7 +14,7 @@ export const FlatListErrorMessage: FC<FlatListErrorMessageProps> = ({
 }) => {
   return (
     <FlatListItem
-      className={`flat-list-error-message ${className}`}
+      className={`flat-list-error-message ${className ?? ''}`}
       left={icon}
       title={children?.toString() ?? ''}
     />

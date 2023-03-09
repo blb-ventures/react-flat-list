@@ -56,6 +56,7 @@ export const FlatList = <DataType extends Record<string, any>, ExtraType = Recor
         <ul>
           {data.map((it, idx) => (
             <ListItemComponent
+              /* eslint-disable @typescript-eslint/no-unnecessary-condition */
               key={loading ? idx : typeof dataKey === 'string' ? it[dataKey] : dataKey(it)}
               collection={data}
               data={it}

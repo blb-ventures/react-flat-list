@@ -1,8 +1,8 @@
 const path = require('path');
 const confusingBrowserGlobals = require('confusing-browser-globals');
-const tsconfigPath = path.resolve(__dirname, './configs/tsconfig.esm.json');
-// const reactPlugin = require('eslint-plugin-react');
-// const reactHooksPlugin = require('eslint-plugin-react-hooks');
+const tsconfigPath = path.resolve(__dirname, './tsconfig.esm.json');
+const reactPlugin = require('eslint-plugin-react');
+const reactHooksPlugin = require('eslint-plugin-react-hooks');
 const importPlugin = require('eslint-plugin-import');
 const jsxA11yPlugin = require('eslint-plugin-jsx-a11y');
 const prettierPlugin = require('eslint-plugin-prettier');
@@ -10,14 +10,14 @@ const typescriptPlugin = require('@typescript-eslint/eslint-plugin');
 const typescriptRecommended = require('@typescript-eslint/eslint-plugin/dist/configs/recommended');
 const typescriptRecommendedType = require('@typescript-eslint/eslint-plugin/dist/configs/recommended-requiring-type-checking');
 const typescriptStrict = require('@typescript-eslint/eslint-plugin/dist/configs/strict');
-// const reactRecommended = require('eslint-plugin-react/configs/recommended');
+const reactRecommended = require('eslint-plugin-react/configs/recommended');
 const typescriptParser = require('@typescript-eslint/parser');
 
 module.exports = {
   plugins: {
     '@typescript-eslint': typescriptPlugin,
-    // 'react': reactPlugin,
-    // 'react-hooks': reactHooksPlugin,
+    'react': reactPlugin,
+    'react-hooks': reactHooksPlugin,
     'import': importPlugin,
     'jsx-a11y': jsxA11yPlugin,
     'prettier': prettierPlugin,
@@ -25,7 +25,7 @@ module.exports = {
   files: ['**/*.{ts,tsx}'],
   ignores: ['node_modules', 'lib'],
   languageOptions: {
-    // ...reactRecommended.languageOptions,
+    ...reactRecommended.languageOptions,
     ecmaVersion: 'latest',
     sourceType: 'module',
     parser: typescriptParser,
@@ -34,12 +34,15 @@ module.exports = {
   settings: {
     'import/extensions': ['.ts', '.tsx', 'd.ts'],
     'import/ignore': ['node_modules', '\\.(coffee|scss|css|less|hbs|svg|json)$'],
+    'react': {
+      version: 'detect',
+    },
   },
   rules: {
     ...typescriptRecommended.rules,
     ...typescriptRecommendedType.rules,
     ...typescriptStrict.rules,
-    // ...reactRecommended.rules,
+    ...reactRecommended.rules,
     'prettier/prettier': 'error',
     '@typescript-eslint/no-unsafe-argument': 'off',
     '@typescript-eslint/consistent-type-assertions': 'error',
@@ -616,207 +619,209 @@ module.exports = {
     'jsx-a11y/no-autofocus': ['error', { ignoreNonDOM: true }],
 
     // React hooks
-    // 'react-hooks/rules-of-hooks': 'error',
-    // 'react-hooks/exhaustive-deps': 'warn',
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
 
     // React
-    // 'no-underscore-dangle': [
-    //   'error',
-    //   {
-    //     allow: ['__typename'],
-    //     allowAfterThis: false,
-    //     allowAfterSuper: false,
-    //     enforceInMethodNames: true,
-    //   },
-    // ],
-    // 'jsx-quotes': ['error', 'prefer-double'],
-    // 'class-methods-use-this': [
-    //   'error',
-    //   {
-    //     exceptMethods: [
-    //       'render',
-    //       'getInitialState',
-    //       'getDefaultProps',
-    //       'getChildContext',
-    //       'componentWillMount',
-    //       'UNSAFE_componentWillMount',
-    //       'componentDidMount',
-    //       'componentWillReceiveProps',
-    //       'UNSAFE_componentWillReceiveProps',
-    //       'shouldComponentUpdate',
-    //       'componentWillUpdate',
-    //       'UNSAFE_componentWillUpdate',
-    //       'componentDidUpdate',
-    //       'componentWillUnmount',
-    //       'componentDidCatch',
-    //       'getSnapshotBeforeUpdate',
-    //     ],
-    //   },
-    // ],
-    // 'react/jsx-boolean-value': ['error', 'never', { always: [] }],
-    // 'react/jsx-closing-bracket-location': ['error', 'line-aligned'],
-    // 'react/jsx-closing-tag-location': 'error',
-    // 'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.tsx'] }],
-    // 'react/jsx-handler-names': [
-    //   'error',
-    //   { eventHandlerPrefix: 'handle', eventHandlerPropPrefix: 'on' },
-    // ],
-    // 'react/jsx-indent-props': ['error', 2],
-    // 'react/jsx-max-props-per-line': ['error', { maximum: 5, when: 'multiline' }],
-    // 'react/jsx-no-bind': [
-    //   'error',
-    //   {
-    //     ignoreRefs: true,
-    //     allowArrowFunctions: true,
-    //     allowFunctions: false,
-    //     allowBind: false,
-    //     ignoreDOMComponents: true,
-    //   },
-    // ],
-    // 'react/jsx-pascal-case': ['error', { allowAllCaps: true, ignore: [] }],
-    // 'react/jsx-sort-props': [
-    //   'error',
-    //   {
-    //     ignoreCase: true,
-    //     callbacksLast: false,
-    //     shorthandFirst: false,
-    //     shorthandLast: false,
-    //     noSortAlphabetically: false,
-    //     reservedFirst: true,
-    //   },
-    // ],
-    // 'react/no-danger': 'warn',
-    // 'react/no-did-mount-set-state': 'error',
-    // 'react/no-did-update-set-state': 'error',
-    // 'react/no-will-update-set-state': 'error',
-    // 'react/no-multi-comp': ['error', { ignoreStateless: true }],
-    // 'react/prefer-es6-class': ['error', 'always'],
-    // 'react/prefer-stateless-function': ['error', { ignorePureComponents: true }],
-    // 'react/self-closing-comp': 'error',
-    // 'react/sort-comp': [
-    //   'error',
-    //   {
-    //     order: [
-    //       'static-variables',
-    //       'static-methods',
-    //       'instance-variables',
-    //       'lifecycle',
-    //       '/^handle.+$/',
-    //       '/^on.+$/',
-    //       'getters',
-    //       'setters',
-    //       '/^(get|set)(?!(InitialState$|DefaultProps$|ChildContext$)).+$/',
-    //       'instance-methods',
-    //       'everything-else',
-    //       'rendering',
-    //     ],
-    //     groups: {
-    //       lifecycle: [
-    //         'displayName',
-    //         'propTypes',
-    //         'contextTypes',
-    //         'childContextTypes',
-    //         'mixins',
-    //         'statics',
-    //         'defaultProps',
-    //         'constructor',
-    //         'getDefaultProps',
-    //         'getInitialState',
-    //         'state',
-    //         'getChildContext',
-    //         'getDerivedStateFromProps',
-    //         'componentWillMount',
-    //         'UNSAFE_componentWillMount',
-    //         'componentDidMount',
-    //         'componentWillReceiveProps',
-    //         'UNSAFE_componentWillReceiveProps',
-    //         'shouldComponentUpdate',
-    //         'componentWillUpdate',
-    //         'UNSAFE_componentWillUpdate',
-    //         'getSnapshotBeforeUpdate',
-    //         'componentDidUpdate',
-    //         'componentDidCatch',
-    //         'componentWillUnmount',
-    //       ],
-    //       rendering: ['/^render.+$/', 'render'],
-    //     },
-    //   },
-    // ],
-    // 'react/jsx-wrap-multilines': [
-    //   'off',
-    //   {
-    //     declaration: 'parens-new-line',
-    //     assignment: 'parens-new-line',
-    //     return: 'parens-new-line',
-    //     arrow: 'parens-new-line',
-    //     condition: 'parens-new-line',
-    //     logical: 'parens-new-line',
-    //     prop: 'parens-new-line',
-    //   },
-    // ],
-    // 'react/jsx-first-prop-new-line': ['error', 'multiline-multiprop'],
-    // 'react/jsx-equals-spacing': ['error', 'never'],
-    // 'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.tsx'] }],
-    // 'react/forbid-component-props': ['error', { forbid: ['style'] }],
-    // 'react/no-unused-prop-types': [
-    //   'error',
-    //   {
-    //     customValidators: [],
-    //     skipShapeProps: true,
-    //   },
-    // ],
-    // 'react/style-prop-object': 'error',
-    // 'react/jsx-tag-spacing': [
-    //   'error',
-    //   {
-    //     closingSlash: 'never',
-    //     beforeSelfClosing: 'always',
-    //     afterOpening: 'never',
-    //     beforeClosing: 'never',
-    //   },
-    // ],
-    // 'react/no-array-index-key': 'warn',
-    // 'react/require-default-props': [
-    //   'off',
-    //   {
-    //     forbidDefaultForRequired: true,
-    //   },
-    // ],
-    // 'react/forbid-foreign-prop-types': ['warn', { allowInPropTypes: true }],
-    // 'react/void-dom-elements-no-children': 'error',
-    // 'react/default-props-match-prop-types': ['error', { allowRequiredDefaults: false }],
-    // 'react/no-redundant-should-component-update': 'error',
-    // 'react/no-unused-state': 'error',
-    // 'react/boolean-prop-naming': [
-    //   'warn',
-    //   {
-    //     propTypeNames: ['bool', 'mutuallyExclusiveTrueProps'],
-    //     rule: '^(is|has|should|can)[A-Z]([A-Za-z0-9]?)+',
-    //     message: 'Bool flags must start with either is, has, should or can',
-    //   },
-    // ],
-    // 'react/no-typos': 'error',
-    // 'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'never' }],
-    // 'react/destructuring-assignment': ['error', 'always'],
-    // 'react/no-access-state-in-setstate': 'error',
-    // 'react/button-has-type': ['error', { button: true, submit: true, reset: false }],
-    // 'react/jsx-child-element-spacing': 'error',
-    // 'react/no-this-in-sfc': 'error',
-    // 'react/jsx-max-depth': ['error', { max: 20 }],
-    // 'react/jsx-props-no-multi-spaces': 'error',
-    // 'react/no-unsafe': 'error',
-    // 'react/jsx-fragments': ['error', 'syntax'],
-    // 'react/jsx-curly-newline': ['error', { multiline: 'consistent', singleline: 'consistent' }],
-    // 'react/state-in-constructor': ['error', 'always'],
-    // 'react/static-property-placement': ['error', 'property assignment'],
-    // 'react/jsx-no-script-url': ['error', [{ name: 'Link', props: ['to'] }]],
-    // 'react/jsx-no-useless-fragment': 'error',
-    // 'react/no-adjacent-inline-elements': 'error',
-    // 'react/jsx-newline': ['error', { prevent: true }],
-    // 'react/jsx-no-constructed-context-values': 'error',
-    // 'react/no-unstable-nested-components': 'error',
+    'no-underscore-dangle': [
+      'error',
+      {
+        allow: ['__typename'],
+        allowAfterThis: false,
+        allowAfterSuper: false,
+        enforceInMethodNames: true,
+      },
+    ],
+    'jsx-quotes': ['error', 'prefer-double'],
+    'class-methods-use-this': [
+      'error',
+      {
+        exceptMethods: [
+          'render',
+          'getInitialState',
+          'getDefaultProps',
+          'getChildContext',
+          'componentWillMount',
+          'UNSAFE_componentWillMount',
+          'componentDidMount',
+          'componentWillReceiveProps',
+          'UNSAFE_componentWillReceiveProps',
+          'shouldComponentUpdate',
+          'componentWillUpdate',
+          'UNSAFE_componentWillUpdate',
+          'componentDidUpdate',
+          'componentWillUnmount',
+          'componentDidCatch',
+          'getSnapshotBeforeUpdate',
+        ],
+      },
+    ],
+    'react/jsx-boolean-value': ['error', 'never', { always: [] }],
+    'react/jsx-closing-bracket-location': ['error', 'line-aligned'],
+    'react/jsx-closing-tag-location': 'error',
+    'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.tsx'] }],
+    'react/jsx-handler-names': [
+      'error',
+      { eventHandlerPrefix: 'handle', eventHandlerPropPrefix: 'on' },
+    ],
+    'react/jsx-indent-props': ['error', 2],
+    'react/jsx-max-props-per-line': ['error', { maximum: 5, when: 'multiline' }],
+    'react/jsx-no-bind': [
+      'error',
+      {
+        ignoreRefs: true,
+        allowArrowFunctions: true,
+        allowFunctions: false,
+        allowBind: false,
+        ignoreDOMComponents: true,
+      },
+    ],
+    'react/jsx-pascal-case': ['error', { allowAllCaps: true, ignore: [] }],
+    'react/jsx-sort-props': [
+      'error',
+      {
+        ignoreCase: true,
+        callbacksLast: false,
+        shorthandFirst: false,
+        shorthandLast: false,
+        noSortAlphabetically: false,
+        reservedFirst: true,
+      },
+    ],
+    'react/no-danger': 'warn',
+    'react/no-did-mount-set-state': 'error',
+    'react/no-did-update-set-state': 'error',
+    'react/no-will-update-set-state': 'error',
+    'react/no-multi-comp': ['error', { ignoreStateless: true }],
+    'react/prefer-es6-class': ['error', 'always'],
+    'react/prefer-stateless-function': ['error', { ignorePureComponents: true }],
+    'react/self-closing-comp': 'error',
+    'react/sort-comp': [
+      'error',
+      {
+        order: [
+          'static-variables',
+          'static-methods',
+          'instance-variables',
+          'lifecycle',
+          '/^handle.+$/',
+          '/^on.+$/',
+          'getters',
+          'setters',
+          '/^(get|set)(?!(InitialState$|DefaultProps$|ChildContext$)).+$/',
+          'instance-methods',
+          'everything-else',
+          'rendering',
+        ],
+        groups: {
+          lifecycle: [
+            'displayName',
+            'propTypes',
+            'contextTypes',
+            'childContextTypes',
+            'mixins',
+            'statics',
+            'defaultProps',
+            'constructor',
+            'getDefaultProps',
+            'getInitialState',
+            'state',
+            'getChildContext',
+            'getDerivedStateFromProps',
+            'componentWillMount',
+            'UNSAFE_componentWillMount',
+            'componentDidMount',
+            'componentWillReceiveProps',
+            'UNSAFE_componentWillReceiveProps',
+            'shouldComponentUpdate',
+            'componentWillUpdate',
+            'UNSAFE_componentWillUpdate',
+            'getSnapshotBeforeUpdate',
+            'componentDidUpdate',
+            'componentDidCatch',
+            'componentWillUnmount',
+          ],
+          rendering: ['/^render.+$/', 'render'],
+        },
+      },
+    ],
+    'react/jsx-wrap-multilines': [
+      'off',
+      {
+        declaration: 'parens-new-line',
+        assignment: 'parens-new-line',
+        return: 'parens-new-line',
+        arrow: 'parens-new-line',
+        condition: 'parens-new-line',
+        logical: 'parens-new-line',
+        prop: 'parens-new-line',
+      },
+    ],
+    'react/jsx-first-prop-new-line': ['error', 'multiline-multiprop'],
+    'react/jsx-equals-spacing': ['error', 'never'],
+    'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.tsx'] }],
+    'react/forbid-component-props': ['error', { forbid: ['style'] }],
+    'react/no-unused-prop-types': [
+      'error',
+      {
+        customValidators: [],
+        skipShapeProps: true,
+      },
+    ],
+    'react/style-prop-object': 'error',
+    'react/jsx-tag-spacing': [
+      'error',
+      {
+        closingSlash: 'never',
+        beforeSelfClosing: 'always',
+        afterOpening: 'never',
+        beforeClosing: 'never',
+      },
+    ],
+    'react/no-array-index-key': 'warn',
+    'react/require-default-props': [
+      'off',
+      {
+        forbidDefaultForRequired: true,
+      },
+    ],
+    'react/forbid-foreign-prop-types': ['warn', { allowInPropTypes: true }],
+    'react/void-dom-elements-no-children': 'error',
+    'react/default-props-match-prop-types': ['error', { allowRequiredDefaults: false }],
+    'react/no-redundant-should-component-update': 'error',
+    'react/no-unused-state': 'error',
+    'react/boolean-prop-naming': [
+      'warn',
+      {
+        propTypeNames: ['bool', 'mutuallyExclusiveTrueProps'],
+        rule: '^(is|has|should|can)[A-Z]([A-Za-z0-9]?)+',
+        message: 'Bool flags must start with either is, has, should or can',
+      },
+    ],
+    'react/no-typos': 'error',
+    'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'never' }],
+    'react/destructuring-assignment': ['error', 'always'],
+    'react/no-access-state-in-setstate': 'error',
+    'react/button-has-type': ['error', { button: true, submit: true, reset: false }],
+    'react/jsx-child-element-spacing': 'error',
+    'react/no-this-in-sfc': 'error',
+    'react/jsx-max-depth': ['error', { max: 20 }],
+    'react/jsx-props-no-multi-spaces': 'error',
+    'react/no-unsafe': 'error',
+    'react/jsx-fragments': ['error', 'syntax'],
+    'react/jsx-curly-newline': ['error', { multiline: 'consistent', singleline: 'consistent' }],
+    'react/state-in-constructor': ['error', 'always'],
+    'react/static-property-placement': ['error', 'property assignment'],
+    'react/jsx-no-script-url': ['error', [{ name: 'Link', props: ['to'] }]],
+    'react/jsx-no-useless-fragment': 'error',
+    'react/no-adjacent-inline-elements': 'error',
+    'react/jsx-newline': ['error', { prevent: true }],
+    'react/jsx-no-constructed-context-values': 'error',
+    'react/no-unstable-nested-components': 'error',
 
     // Disabled Rules
+    'react/react-in-jsx-scope': 'off',
+    'import/no-extraneous-dependencies': 'off',
     '@typescript-eslint/explicit-member-accessibility': 'off',
     'array-bracket-newline': ['off', 'consistent'],
     'array-element-newline': ['off', { multiline: true, minItems: 5 }],
@@ -886,18 +891,18 @@ module.exports = {
     'jsx-a11y/click-events-have-key-events': 'off',
     'jsx-a11y/no-onchange': 'off',
 
-    // 'react/display-name': 'off', // Not relevant
-    // 'react/jsx-indent': ['off', 2], // Duplicate rule
-    // 'react/jsx-no-literals': ['off', { noStrings: true }],
-    // 'react/jsx-props-no-spreading': 'off',
-    // 'react/jsx-no-undef': 'off',
-    // 'react/jsx-one-expression-per-line': 'off',
-    // 'react/jsx-sort-default-props': ['off', { ignoreCase: true }], // Duplicated rule
-    // 'react/jsx-sort-prop-types': 'off', // Deprecated in favor of react/jsx-sort-props
-    // 'react/jsx-space-before-closing': ['off', 'always'], // Deprecated
-    // 'react/no-set-state': 'off',
-    // 'react/prefer-read-only-props': 'off',
-    // 'react/require-optimization': ['off', { allowDecorators: [] }], // Not relevant
+    'react/display-name': 'off', // Not relevant
+    'react/jsx-indent': ['off', 2], // Duplicate rule
+    'react/jsx-no-literals': ['off', { noStrings: true }],
+    'react/jsx-props-no-spreading': 'off',
+    'react/jsx-no-undef': 'off',
+    'react/jsx-one-expression-per-line': 'off',
+    'react/jsx-sort-default-props': ['off', { ignoreCase: true }], // Duplicated rule
+    'react/jsx-sort-prop-types': 'off', // Deprecated in favor of react/jsx-sort-props
+    'react/jsx-space-before-closing': ['off', 'always'], // Deprecated
+    'react/no-set-state': 'off',
+    'react/prefer-read-only-props': 'off',
+    'react/require-optimization': ['off', { allowDecorators: [] }], // Not relevant
 
     // Typescript eslint disable
     'brace-style': 'off',

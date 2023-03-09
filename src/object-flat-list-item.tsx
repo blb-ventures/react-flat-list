@@ -35,12 +35,12 @@ export const ObjectFlatListItem = <DataType extends Record<string, unknown>>({
   extra,
   flatListItemProps,
 }: ObjectFlatListItemProps<DataType>) => {
-  if (extra.obj == null || data == null) return null;
+  if (extra.obj == null) return null;
   const value = 'key' in data ? extra.obj[data.key] : data.getValue(extra.obj);
   if (value != null && typeof value !== 'string' && data.formatter == null) {
     throw new Error(`Missing formatter for item labeled: ${data.label}`);
   }
-  const formattedValue = data.formatter != null ? data.formatter(value) : (value as string);
+  const formattedValue = data.formatter != null ? data.formatter(value) : (value as string | null);
   return (
     <FlatListItem
       subtitleLeft={data.label}

@@ -21,7 +21,7 @@ export const LinkWrapper: FC<LinkWrapperProps> = ({
 }) => {
   if (url == null) return <>{children}</>;
   const isPath = !url.startsWith('http');
-  const external = isExternal || downloadName != null || !isPath;
+  const external = isExternal ?? (downloadName != null || !isPath);
   const Link = LinkComponent ?? 'a';
   return external ? (
     <a

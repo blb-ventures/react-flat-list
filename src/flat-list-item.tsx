@@ -1,5 +1,4 @@
 /* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { FC, ReactNode } from 'react';
 import { LinkWrapper, LinkWrapperProps } from './link-wrapper';
@@ -62,7 +61,7 @@ export const FlatListItem: FC<FlatListItemProps> = ({
   const el = (
     <div className={contentClassName} style={{ height }}>
       <div
-        className={`flat-list-item__content__left ${leftOptions?.className}`}
+        className={`flat-list-item__content__left ${leftOptions?.className ?? ''}`}
         style={leftOptions?.style}
       >
         {left}
@@ -87,7 +86,7 @@ export const FlatListItem: FC<FlatListItemProps> = ({
       {center}
       {hasRight && (
         <div
-          className={`flat-list-item__content__right ${rightOptions?.className}`}
+          className={`flat-list-item__content__right ${rightOptions?.className ?? ''}`}
           style={rightOptions?.style}
         >
           {typeof imageRight === 'string' ? (
@@ -113,7 +112,7 @@ export const FlatListItem: FC<FlatListItemProps> = ({
       }`}
       onClick={onClick}
     >
-      <LinkWrapper LinkComponent={LinkComponent} isExternal={urlIsExternal} url={url}>
+      <LinkWrapper isExternal={urlIsExternal} LinkComponent={LinkComponent} url={url}>
         {el}
       </LinkWrapper>
     </li>
