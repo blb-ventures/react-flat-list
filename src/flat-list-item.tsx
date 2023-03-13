@@ -36,7 +36,7 @@ export interface FlatListItemProps {
 export const FlatListItem: FC<FlatListItemProps> = ({
   title,
   className,
-  contentClassName = 'flat-list-item__content',
+  contentClassName = 'flat-list-item-content',
   actionIcon,
   imageLeft,
   imageLeftOptions,
@@ -61,7 +61,7 @@ export const FlatListItem: FC<FlatListItemProps> = ({
   const el = (
     <div className={contentClassName} style={{ height }}>
       <div
-        className={`flat-list-item__content__left ${leftOptions?.className ?? ''}`}
+        className={`flat-list-item-content-left ${leftOptions?.className ?? ''}`}
         style={leftOptions?.style}
       >
         {left}
@@ -70,14 +70,14 @@ export const FlatListItem: FC<FlatListItemProps> = ({
         ) : (
           imageLeft
         )}
-        <div className="flat-list-item__content__left__text-container">
+        <div className="flat-list-item-content-left-text-container">
           {typeof title === 'string' ? (
-            <div className="flat-list-item__content__left__title">{title}</div>
+            <div className="flat-list-item-content-left-title">{title}</div>
           ) : (
             title
           )}
           {typeof subtitleLeft === 'string' ? (
-            <div className="flat-list-item__content__left__subtitle">{subtitleLeft}</div>
+            <div className="flat-list-item-content-left-subtitle">{subtitleLeft}</div>
           ) : (
             subtitleLeft
           )}
@@ -86,7 +86,7 @@ export const FlatListItem: FC<FlatListItemProps> = ({
       {center}
       {hasRight && (
         <div
-          className={`flat-list-item__content__right ${rightOptions?.className ?? ''}`}
+          className={`flat-list-item-content-right ${rightOptions?.className ?? ''}`}
           style={rightOptions?.style}
         >
           {typeof imageRight === 'string' ? (
@@ -95,11 +95,11 @@ export const FlatListItem: FC<FlatListItemProps> = ({
             imageRight
           )}
           {subtitleRight != null && (
-            <div className="flat-list-item__content__right__subtitle">{subtitleRight}</div>
+            <div className="flat-list-item-content-right-subtitle">{subtitleRight}</div>
           )}
           {right}
           {hasActionIcon && (
-            <div className="flat-list-item__content__right__action-icon">{actionIcon}</div>
+            <div className="flat-list-item-content-right-action-icon">{actionIcon}</div>
           )}
         </div>
       )}
@@ -107,7 +107,7 @@ export const FlatListItem: FC<FlatListItemProps> = ({
   );
   return (
     <li
-      className={`flat-list-item ${hasAction ? ' flat-list-item__with-action' : ''} ${
+      className={`flat-list-item ${hasAction ? ' flat-list-item-with-action' : ''} ${
         className ?? ''
       }`}
       onClick={onClick}

@@ -1,6 +1,6 @@
 {
   "name": "@blb-ventures/react-flat-list",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "",
   "main": "./lib/index.js",
   "module": "./lib/index.mjs",
@@ -37,7 +37,8 @@
       "import": "./lib/index.mjs",
       "types": "./index.d.ts"
     },
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./lib/style.css": "./lib/style.css"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^11.0.0",

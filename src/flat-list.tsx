@@ -50,7 +50,7 @@ export const FlatList = <DataType extends Record<string, any>, ExtraType = Recor
   error,
 }: FlatListProps<DataType, ExtraType>) => {
   return (
-    <div className={`flat-list ${className ?? ''} ${loading ? 'flat-list__loading' : ''}`}>
+    <div className={`flat-list ${className ?? ''} ${loading ? 'flat-list-loading' : ''}`}>
       {HeaderComponent}
       {data != null && data.length > 0 && !loading ? (
         <ul>

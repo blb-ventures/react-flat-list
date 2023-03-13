@@ -9,7 +9,7 @@ export interface FlatListHeaderProps {
 export const FlatListHeader: FC<FlatListHeaderProps> = ({ title, right, className }) => {
   return (
     <div className={`flat-list-header ${className ?? ''}`}>
-      {typeof title === 'string' ? <div className="flat-list-header__title">{title}</div> : title}
+      {typeof title === 'string' ? <div className="flat-list-header-title">{title}</div> : title}
       {right != null && <div>{right}</div>}
     </div>
   );
