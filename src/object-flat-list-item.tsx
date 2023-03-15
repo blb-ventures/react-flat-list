@@ -23,17 +23,17 @@ export type ObjectFlatListItemData<DataType extends Record<string, unknown>> =
 export interface ObjectFlatListItemExtra<DataType extends Record<string, unknown>> {
   obj?: DataType;
   fallbackValue?: string;
+  flatListItemProps?: Partial<FlatListItemProps>;
 }
 
 type ObjectFlatListItemProps<DataType extends Record<string, unknown>> = FlatListMapItemProps<
   ObjectFlatListItemData<DataType>,
   ObjectFlatListItemExtra<DataType>
-> & { flatListItemProps: Partial<FlatListItemProps> };
+>;
 
 export const ObjectFlatListItem = <DataType extends Record<string, unknown>>({
   data,
   extra,
-  flatListItemProps,
 }: ObjectFlatListItemProps<DataType>) => {
   if (extra.obj == null) return null;
   const value = 'key' in data ? extra.obj[data.key] : data.getValue(extra.obj);
@@ -45,7 +45,7 @@ export const ObjectFlatListItem = <DataType extends Record<string, unknown>>({
     <FlatListItem
       subtitleLeft={data.label}
       title={formattedValue ?? extra.fallbackValue ?? '-'}
-      {...flatListItemProps}
+      {...extra.flatListItemProps}
     />
   );
 };
