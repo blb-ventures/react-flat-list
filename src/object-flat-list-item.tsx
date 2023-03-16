@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { FlatListMapItemProps } from './flat-list';
 import { FlatListItem, FlatListItemProps } from './flat-list-item';
 
@@ -42,15 +43,16 @@ export const ObjectFlatListItem = <DataType extends Record<string, unknown>>({
   data,
   extra,
 }: ObjectFlatListItemProps<DataType>) => {
-  if (extra.obj == null) return null;
-  const value = isKeyData(data) ? extra.obj[data.key] : data.getValue(extra.obj);
-  let formattedValue: string | null = null;
-  if (data.formatter) {
-    formattedValue = data.formatter(value);
-  } else {
-    formattedValue = value != null ? String(value) : null;
-  }
-  return (
+  const formattedValue = useMemo(() => {
+    if (extra.obj == null) return null;
+    const value = isKeyData(data) ? extra.obj[data.key] : data.getValue(extra.obj);
+    if (data.formatter) {
+      return data.formatter(value);
+    } else {
+      return value != null ? String(value) : null;
+    }
+  }, [data, extra]);
+  return extra.obj == null ? null : (
     <FlatListItem
       subtitleLeft={data.label}
       title={formattedValue ?? extra.fallbackValue ?? '-'}
