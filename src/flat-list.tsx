@@ -2,18 +2,27 @@ import { FC, ReactElement, ReactNode } from 'react';
 
 // ExtraType is defined to undefined to avoid breaking types for map components
 // that do not want to use the extra props
-export interface FlatListMapItemProps<DataType extends Record<string, any>, ExtraType = undefined> {
+export interface FlatListMapItemProps<
+  DataType extends Record<string, unknown>,
+  ExtraType = undefined,
+> {
   data: DataType;
   index: number;
   collection: DataType[];
   extra: ExtraType;
 }
 
-export interface BaseFlatListProps<DataType extends Record<string, any>, ExtraType> {
+type ObjectKey<O, T> = { [K in keyof O]: O[K] extends T ? K : never }[keyof O & string];
+
+export interface BaseFlatListProps<
+  DataType extends Record<Key, unknown>,
+  ExtraType,
+  Key extends ObjectKey<DataType, string | number>,
+> {
   className?: string;
   extraClassName?: string;
   data?: DataType[];
-  dataKey: string | ((item: DataType) => string);
+  dataKey: Key | ((item: DataType) => string | number);
   HeaderComponent?: ReactNode;
   FooterComponent?: ReactNode;
   EmptyListComponent?: ReactNode;
@@ -30,13 +39,18 @@ export interface BaseFlatListProps<DataType extends Record<string, any>, ExtraTy
 // Makes "extra" a required prop if the ExtraType is object-like.
 // The ExtraType comes from ListItemComponent type
 export type FlatListProps<
-  DataType extends Record<string, any>,
+  DataType extends Record<Key, unknown>,
   ExtraType,
-> = ExtraType extends Record<string, any>
-  ? BaseFlatListProps<DataType, ExtraType>
-  : Omit<BaseFlatListProps<DataType, ExtraType>, 'extra'> & { extra?: ExtraType };
+  Key extends ObjectKey<DataType, string | number>,
+> = ExtraType extends Record<string, unknown>
+  ? BaseFlatListProps<DataType, ExtraType, Key>
+  : Omit<BaseFlatListProps<DataType, ExtraType, Key>, 'extra'> & { extra?: ExtraType };
 
-export const FlatList = <DataType extends Record<string, any>, ExtraType = Record<string, any>>({
+export const FlatList = <
+  DataType extends Record<Key, unknown>,
+  Key extends ObjectKey<DataType, string | number>,
+  ExtraType = Record<string, unknown>,
+>({
   className,
   FooterComponent,
   HeaderComponent,
@@ -48,22 +62,24 @@ export const FlatList = <DataType extends Record<string, any>, ExtraType = Recor
   extra,
   loading,
   error,
-}: FlatListProps<DataType, ExtraType>) => {
+}: FlatListProps<DataType, ExtraType, Key>) => {
   return (
     <div className={`flat-list ${className ?? ''} ${loading ? 'flat-list-loading' : ''}`}>
       {HeaderComponent}
       {data != null && data.length > 0 && !loading ? (
         <ul>
-          {data.map((it, idx) => (
-            <ListItemComponent
-              /* eslint-disable @typescript-eslint/no-unnecessary-condition */
-              key={loading ? idx : typeof dataKey === 'string' ? it[dataKey] : dataKey(it)}
-              collection={data}
-              data={it}
-              extra={extra ?? ({} as ExtraType)}
-              index={idx}
-            />
-          ))}
+          {data.map((it, idx) => {
+            const key = typeof dataKey === 'string' ? it[dataKey] : dataKey(it);
+            return (
+              <ListItemComponent
+                key={typeof key === 'string' || typeof key === 'number' ? key : idx}
+                collection={data}
+                data={it}
+                extra={extra ?? ({} as ExtraType)}
+                index={idx}
+              />
+            );
+          })}
         </ul>
       ) : ErrorComponent != null && error ? (
         ErrorComponent

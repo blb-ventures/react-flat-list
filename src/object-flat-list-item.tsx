@@ -46,11 +46,8 @@ export const ObjectFlatListItem = <DataType extends Record<string, unknown>>({
   const formattedValue = useMemo(() => {
     if (extra.obj == null) return null;
     const value = isKeyData(data) ? extra.obj[data.key] : data.getValue(extra.obj);
-    if (data.formatter) {
-      return data.formatter(value);
-    } else {
-      return value != null ? String(value) : null;
-    }
+    if (data.formatter) return data.formatter(value);
+    return value != null ? String(value) : null;
   }, [data, extra]);
   return extra.obj == null ? null : (
     <FlatListItem
