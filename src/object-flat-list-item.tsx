@@ -1,19 +1,19 @@
 import { FlatListMapItemProps } from './flat-list';
 import { FlatListItem, FlatListItemProps } from './flat-list-item';
 
-export interface BaseObjectFlatListItemData {
+export interface BaseObjectFlatListItemData<DataType extends Record<string, unknown>> {
   label: string;
   formatter?: (value: unknown) => string | null;
-  flatListItemProps?: Partial<FlatListItemProps>;
+  flatListItemProps?: Partial<FlatListItemProps> | ((obj: DataType) => Partial<FlatListItemProps>);
 }
 
 export interface KeyBasedObjectFlatListItemData<DataType extends Record<string, unknown>>
-  extends BaseObjectFlatListItemData {
+  extends BaseObjectFlatListItemData<DataType> {
   key: keyof DataType;
 }
 
 export interface FnBasedObjectFlatListItemData<DataType extends Record<string, unknown>>
-  extends BaseObjectFlatListItemData {
+  extends BaseObjectFlatListItemData<DataType> {
   getValue: (obj: DataType) => unknown;
 }
 
