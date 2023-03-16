@@ -3,7 +3,8 @@ import { FlatListItem, FlatListItemProps } from './flat-list-item';
 
 export interface BaseObjectFlatListItemData {
   label: string;
-  formatter?: (value: unknown) => string;
+  formatter?: (value: unknown) => string | null;
+  flatListItemProps?: Partial<FlatListItemProps>;
 }
 
 export interface KeyBasedObjectFlatListItemData<DataType extends Record<string, unknown>>
@@ -37,15 +38,14 @@ export const ObjectFlatListItem = <DataType extends Record<string, unknown>>({
 }: ObjectFlatListItemProps<DataType>) => {
   if (extra.obj == null) return null;
   const value = 'key' in data ? extra.obj[data.key] : data.getValue(extra.obj);
-  if (value != null && typeof value !== 'string' && data.formatter == null) {
-    throw new Error(`Missing formatter for item labeled: ${data.label}`);
-  }
-  const formattedValue = data.formatter != null ? data.formatter(value) : (value as string | null);
+  const formattedValue =
+    data.formatter != null ? data.formatter(value) : value != null ? String(value) : undefined;
   return (
     <FlatListItem
       subtitleLeft={data.label}
       title={formattedValue ?? extra.fallbackValue ?? '-'}
       {...extra.flatListItemProps}
+      {...data.flatListItemProps}
     />
   );
 };
