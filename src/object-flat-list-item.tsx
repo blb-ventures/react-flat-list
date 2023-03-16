@@ -2,21 +2,21 @@ import { useMemo } from 'react';
 import { FlatListMapItemProps } from './flat-list';
 import { FlatListItem, FlatListItemProps } from './flat-list-item';
 
-export interface BaseObjectFlatListItemData<DataType extends Record<string, unknown>> {
+export type BaseObjectFlatListItemData<DataType extends Record<string, unknown>> = {
   label: string;
   formatter?: (value: unknown) => string | null;
   flatListItemProps?: Partial<FlatListItemProps> | ((obj: DataType) => Partial<FlatListItemProps>);
-}
+};
 
-export interface KeyBasedObjectFlatListItemData<DataType extends Record<string, unknown>>
-  extends BaseObjectFlatListItemData<DataType> {
-  key: keyof DataType;
-}
+export type KeyBasedObjectFlatListItemData<DataType extends Record<string, unknown>> =
+  BaseObjectFlatListItemData<DataType> & {
+    key: keyof DataType;
+  };
 
-export interface FnBasedObjectFlatListItemData<DataType extends Record<string, unknown>>
-  extends BaseObjectFlatListItemData<DataType> {
-  getValue: (obj: DataType) => unknown;
-}
+export type FnBasedObjectFlatListItemData<DataType extends Record<string, unknown>> =
+  BaseObjectFlatListItemData<DataType> & {
+    getValue: (obj: DataType) => unknown;
+  };
 
 export type ObjectFlatListItemData<DataType extends Record<string, unknown>> =
   | KeyBasedObjectFlatListItemData<DataType>
