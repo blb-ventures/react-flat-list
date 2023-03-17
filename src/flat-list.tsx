@@ -2,10 +2,8 @@ import { FC, ReactElement, ReactNode } from 'react';
 
 // ExtraType is defined to undefined to avoid breaking types for map components
 // that do not want to use the extra props
-export interface FlatListMapItemProps<
-  DataType extends Record<string, unknown>,
-  ExtraType = undefined,
-> {
+// DataType is defined to Record<string, any> to avoid breaking types for map components
+export interface FlatListMapItemProps<DataType extends Record<string, any>, ExtraType = undefined> {
   data: DataType;
   index: number;
   collection: DataType[];
@@ -15,7 +13,7 @@ export interface FlatListMapItemProps<
 type ObjectKey<O, T> = { [K in keyof O]: O[K] extends T ? K : never }[keyof O & string];
 
 export interface BaseFlatListProps<
-  DataType extends Record<Key, unknown>,
+  DataType extends Record<Key, any>,
   ExtraType,
   Key extends ObjectKey<DataType, string | number>,
 > {
@@ -39,17 +37,17 @@ export interface BaseFlatListProps<
 // Makes "extra" a required prop if the ExtraType is object-like.
 // The ExtraType comes from ListItemComponent type
 export type FlatListProps<
-  DataType extends Record<Key, unknown>,
+  DataType extends Record<Key, any>,
   ExtraType,
   Key extends ObjectKey<DataType, string | number>,
-> = ExtraType extends Record<string, unknown>
+> = ExtraType extends Record<string, any>
   ? BaseFlatListProps<DataType, ExtraType, Key>
   : Omit<BaseFlatListProps<DataType, ExtraType, Key>, 'extra'> & { extra?: ExtraType };
 
 export const FlatList = <
-  DataType extends Record<Key, unknown>,
+  DataType extends Record<Key, any>,
   Key extends ObjectKey<DataType, string | number>,
-  ExtraType = Record<string, unknown>,
+  ExtraType = Record<string, any>,
 >({
   className,
   FooterComponent,

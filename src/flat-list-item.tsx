@@ -8,7 +8,7 @@ export interface SectionOptions {
   className?: string;
 }
 
-export type FlatListItemProps = {
+export interface FlatListItemProps {
   title: string | ReactNode;
   url?: string;
   onClick?: () => void;
@@ -31,7 +31,7 @@ export type FlatListItemProps = {
   urlIsExternal?: boolean;
   height?: string;
   LinkComponent?: LinkWrapperProps['LinkComponent'];
-};
+}
 
 export const FlatListItem: FC<FlatListItemProps> = ({
   title,
