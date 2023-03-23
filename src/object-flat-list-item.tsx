@@ -2,44 +2,44 @@ import { useMemo } from 'react';
 import { FlatListMapItemProps } from './flat-list';
 import { FlatListItem, FlatListItemProps } from './flat-list-item';
 
-export interface BaseObjectFlatListItemData<DataType extends Record<string, unknown>> {
+export interface BaseObjectFlatListItemData<DataType> {
   label: string;
   formatter?: (value: unknown) => string | null;
   flatListItemProps?: Partial<FlatListItemProps> | ((obj: DataType) => Partial<FlatListItemProps>);
 }
 
-export interface KeyBasedObjectFlatListItemData<DataType extends Record<string, unknown>>
+export interface KeyBasedObjectFlatListItemData<DataType>
   extends BaseObjectFlatListItemData<DataType> {
   key: keyof DataType;
 }
 
-export interface FnBasedObjectFlatListItemData<DataType extends Record<string, unknown>>
+export interface FnBasedObjectFlatListItemData<DataType>
   extends BaseObjectFlatListItemData<DataType> {
   getValue: (obj: DataType) => unknown;
 }
 
-export type ObjectFlatListItemData<DataType extends Record<string, unknown>> =
+export type ObjectFlatListItemData<DataType> =
   | KeyBasedObjectFlatListItemData<DataType>
   | FnBasedObjectFlatListItemData<DataType>;
 
-export interface ObjectFlatListItemExtra<DataType extends Record<string, unknown>> {
+export interface ObjectFlatListItemExtra<DataType> {
   obj?: DataType;
   fallbackValue?: string;
   flatListItemProps?: Partial<FlatListItemProps>;
 }
 
-type ObjectFlatListItemProps<DataType extends Record<string, unknown>> = FlatListMapItemProps<
+type ObjectFlatListItemProps<DataType> = FlatListMapItemProps<
   ObjectFlatListItemData<DataType>,
   ObjectFlatListItemExtra<DataType>
 >;
 
-const isKeyData = <DataType extends Record<string, unknown>>(
+const isKeyData = <DataType extends Record<string, any>>(
   data: ObjectFlatListItemData<DataType>,
 ): data is KeyBasedObjectFlatListItemData<DataType> => {
   return 'key' in data;
 };
 
-export const ObjectFlatListItem = <DataType extends Record<string, unknown>>({
+export const ObjectFlatListItem = <DataType extends Record<string, any>>({
   data,
   extra,
 }: ObjectFlatListItemProps<DataType>) => {
