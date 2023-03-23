@@ -1,45 +1,19 @@
 import { useMemo } from 'react';
 import { FlatListMapItemProps } from './flat-list';
-import { FlatListItem, FlatListItemProps } from './flat-list-item';
-
-export interface BaseObjectFlatListItemData<DataType> {
-  label: string;
-  formatter?: (value: unknown) => string | null;
-  flatListItemProps?: Partial<FlatListItemProps> | ((obj: DataType) => Partial<FlatListItemProps>);
-}
-
-export interface KeyBasedObjectFlatListItemData<DataType>
-  extends BaseObjectFlatListItemData<DataType> {
-  key: keyof DataType;
-}
-
-export interface FnBasedObjectFlatListItemData<DataType>
-  extends BaseObjectFlatListItemData<DataType> {
-  getValue: (obj: DataType) => unknown;
-}
-
-export type ObjectFlatListItemData<DataType> =
-  | KeyBasedObjectFlatListItemData<DataType>
-  | FnBasedObjectFlatListItemData<DataType>;
-
-export interface ObjectFlatListItemExtra<DataType> {
-  obj?: DataType;
-  fallbackValue?: string;
-  flatListItemProps?: Partial<FlatListItemProps>;
-}
+import { FlatListItem } from './flat-list-item';
+import { ObjectFlatListItemData, ObjectFlatListItemExtra } from './object-flat-list-item.interface';
+import { isKeyData } from './object-flat-list-item.typeguard';
 
 type ObjectFlatListItemProps<DataType> = FlatListMapItemProps<
   ObjectFlatListItemData<DataType>,
   ObjectFlatListItemExtra<DataType>
 >;
 
-const isKeyData = <DataType extends Record<string, any>>(
-  data: ObjectFlatListItemData<DataType>,
-): data is KeyBasedObjectFlatListItemData<DataType> => {
-  return 'key' in data;
-};
-
-export const ObjectFlatListItem = <DataType extends Record<string, any>>({
+export const ObjectFlatListItem = <
+  const DataType extends Record<Keys, InnerData>,
+  Keys extends keyof DataType & string,
+  InnerData,
+>({
   data,
   extra,
 }: ObjectFlatListItemProps<DataType>) => {
