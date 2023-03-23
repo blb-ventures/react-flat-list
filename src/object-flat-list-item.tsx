@@ -1,19 +1,45 @@
 import { useMemo } from 'react';
 import { FlatListMapItemProps } from './flat-list';
-import { FlatListItem } from './flat-list-item';
-import { ObjectFlatListItemData, ObjectFlatListItemExtra } from './object-flat-list-item.interface';
-import { isKeyData } from './object-flat-list-item.typeguard';
+import { FlatListItem, FlatListItemProps } from './flat-list-item';
 
-type ObjectFlatListItemProps<DataType> = FlatListMapItemProps<
+export interface BaseObjectFlatListItemData<DataType extends Record<string, any>> {
+  label: string;
+  formatter?: (value: unknown) => string | null;
+  flatListItemProps?: Partial<FlatListItemProps> | ((obj: DataType) => Partial<FlatListItemProps>);
+}
+
+export interface KeyBasedObjectFlatListItemData<DataType extends Record<string, any>>
+  extends BaseObjectFlatListItemData<DataType> {
+  key: keyof DataType;
+}
+
+export interface FnBasedObjectFlatListItemData<DataType extends Record<string, any>>
+  extends BaseObjectFlatListItemData<DataType> {
+  getValue: (obj: DataType) => unknown;
+}
+
+export type ObjectFlatListItemData<DataType extends Record<string, any>> =
+  | KeyBasedObjectFlatListItemData<DataType>
+  | FnBasedObjectFlatListItemData<DataType>;
+
+export interface ObjectFlatListItemExtra<DataType extends Record<string, any>> {
+  obj?: DataType;
+  fallbackValue?: string;
+  flatListItemProps?: Partial<FlatListItemProps>;
+}
+
+type ObjectFlatListItemProps<DataType extends Record<string, any>> = FlatListMapItemProps<
   ObjectFlatListItemData<DataType>,
   ObjectFlatListItemExtra<DataType>
 >;
 
-export const ObjectFlatListItem = <
-  const DataType extends Record<Keys, InnerData>,
-  Keys extends keyof DataType & string,
-  InnerData,
->({
+export const isKeyData = <DataType extends Record<string, any>>(
+  data: ObjectFlatListItemData<DataType>,
+): data is KeyBasedObjectFlatListItemData<DataType> => {
+  return 'key' in data;
+};
+
+export const ObjectFlatListItem = <DataType extends Record<string, any>>({
   data,
   extra,
 }: ObjectFlatListItemProps<DataType>) => {
