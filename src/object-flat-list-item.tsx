@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { FC, useMemo } from 'react';
 import { FlatListMapItemProps } from './flat-list';
 import { FlatListItem, FlatListItemProps } from './flat-list-item';
 
@@ -26,6 +26,7 @@ export interface ObjectFlatListItemExtra<DataType extends Record<string, any>> {
   obj?: DataType;
   fallbackValue?: string;
   flatListItemProps?: Partial<FlatListItemProps>;
+  FlatListComponent?: FC<FlatListItemProps>;
 }
 
 type ObjectFlatListItemProps<DataType extends Record<string, any>> = FlatListMapItemProps<
@@ -49,8 +50,9 @@ export const ObjectFlatListItem = <DataType extends Record<string, any>>({
     if (data.formatter) return data.formatter(value);
     return value != null ? String(value) : null;
   }, [data, extra]);
+  const Component = extra.FlatListComponent ?? FlatListItem;
   return extra.obj == null ? null : (
-    <FlatListItem
+    <Component
       subtitleLeft={data.label}
       title={formattedValue ?? extra.fallbackValue ?? '-'}
       {...extra.flatListItemProps}
