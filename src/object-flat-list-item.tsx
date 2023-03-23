@@ -54,7 +54,9 @@ export const ObjectFlatListItem = <DataType extends Record<string, unknown>>({
       subtitleLeft={data.label}
       title={formattedValue ?? extra.fallbackValue ?? '-'}
       {...extra.flatListItemProps}
-      {...data.flatListItemProps}
+      {...(typeof data.flatListItemProps === 'function'
+        ? data.flatListItemProps(extra.obj)
+        : data.flatListItemProps)}
     />
   );
 };
