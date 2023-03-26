@@ -21,6 +21,11 @@ module.exports = {
     sourceType: 'module',
     ecmaVersion: 'latest',
   },
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
   rules: {
     'prettier/prettier': 'error',
     'react/react-in-jsx-scope': 'off',
