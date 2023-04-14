@@ -49,7 +49,7 @@ export const ObjectFlatListItem = <DataType extends Record<string, any>>({
     const value = isKeyData(data) ? extra.obj[data.key] : data.getValue(extra.obj);
     if (data.formatter) return data.formatter(value);
     return value != null ? String(value) : null;
-  }, [data, extra]);
+  }, [data, extra.obj]);
   const Component = extra.FlatListComponent ?? FlatListItem;
   return extra.obj == null ? null : (
     <Component
