@@ -17,7 +17,7 @@ export interface FlatListItemProps {
   className?: string;
   contentClassName?: string;
   actionIcon?: ReactNode;
-  subtitleRight?: string;
+  subtitleRight?: string | ReactNode;
   subtitleRightClassName?: string;
   subtitleLeft?: string | ReactNode;
   subtitleCenterClassName?: string;
@@ -101,8 +101,10 @@ export const FlatListItem: FC<FlatListItemProps> = ({
           ) : (
             imageRight
           )}
-          {subtitleRight != null && (
+          {typeof subtitleRight === 'string' ? (
             <div className="flat-list-item-content-right-subtitle">{subtitleRight}</div>
+          ) : (
+            subtitleRight
           )}
           {right}
           {hasActionIcon && (
