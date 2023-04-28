@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { FC, ReactNode } from 'react';
+import { FC, FunctionComponent, ReactNode } from 'react';
 import { LinkWrapper, LinkWrapperProps } from './link-wrapper';
 
 export interface SectionOptions {
@@ -33,6 +33,9 @@ export interface FlatListItemProps {
   urlIsExternal?: boolean;
   height?: string;
   LinkComponent?: LinkWrapperProps['LinkComponent'];
+  component?:
+    | FunctionComponent<{ children?: ReactNode; className?: string; onClick?: (e: any) => void }>
+    | string;
 }
 
 export const FlatListItem: FC<FlatListItemProps> = ({
@@ -56,10 +59,12 @@ export const FlatListItem: FC<FlatListItemProps> = ({
   urlIsExternal,
   height = '56px',
   LinkComponent,
+  component,
 }) => {
   const hasAction = onClick != null || url != null;
   const hasActionIcon = actionIcon && hasAction;
   const hasRight = imageRight != null || subtitleRight != null || right != null || hasActionIcon;
+  const Component = component ?? 'li';
   const el = (
     <div className={contentClassName} style={{ height }}>
       <div
@@ -108,7 +113,7 @@ export const FlatListItem: FC<FlatListItemProps> = ({
     </div>
   );
   return (
-    <li
+    <Component
       className={`flat-list-item ${hasAction ? ' flat-list-item-with-action' : ''} ${
         className ?? ''
       }`}
@@ -117,6 +122,6 @@ export const FlatListItem: FC<FlatListItemProps> = ({
       <LinkWrapper isExternal={urlIsExternal} LinkComponent={LinkComponent} url={url}>
         {el}
       </LinkWrapper>
-    </li>
+    </Component>
   );
 };
