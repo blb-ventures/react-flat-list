@@ -20,7 +20,7 @@ export interface BaseFlatListProps<
   className?: string;
   extraClassName?: string;
   data?: DataType[];
-  dataKey: Key | ((item: DataType) => string | number);
+  dataKey: Key | ((item: DataType, index: number) => string | number);
   HeaderComponent?: ReactNode;
   FooterComponent?: ReactNode;
   EmptyListComponent?: ReactNode;
@@ -67,7 +67,7 @@ export const FlatList = <
       {data != null && data.length > 0 && !loading ? (
         <ul>
           {data.map((it, idx) => {
-            const key = typeof dataKey === 'string' ? it[dataKey] : dataKey(it);
+            const key = typeof dataKey === 'string' ? it[dataKey] : dataKey(it, idx);
             return (
               <ListItemComponent
                 key={typeof key === 'string' || typeof key === 'number' ? key : idx}
