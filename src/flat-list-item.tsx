@@ -36,6 +36,7 @@ export interface FlatListItemProps {
   component?:
     | FunctionComponent<{ children?: ReactNode; className?: string; onClick?: (e: any) => void }>
     | string;
+  containerProps?: Partial<JSX.IntrinsicElements['div']>;
 }
 
 export const FlatListItem: FC<FlatListItemProps> = ({
@@ -60,13 +61,14 @@ export const FlatListItem: FC<FlatListItemProps> = ({
   height = '56px',
   LinkComponent,
   component,
+  containerProps,
 }) => {
   const hasAction = onClick != null || url != null;
   const hasActionIcon = actionIcon && hasAction;
   const hasRight = imageRight != null || subtitleRight != null || right != null || hasActionIcon;
   const Component = component ?? 'li';
   const el = (
-    <div className={contentClassName} style={{ height }}>
+    <div {...containerProps} className={contentClassName} style={{ height }}>
       <div
         className={`flat-list-item-content-left ${leftOptions?.className ?? ''}`}
         style={leftOptions?.style}
