@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.0](https://github.com/blb-ventures/react-flat-list/compare/v0.8.1...v0.9.0) (2023-06-21)
+
+
+### Features
+
+* adds flat-list-item container props to its props ([4a2aa11](https://github.com/blb-ventures/react-flat-list/commit/4a2aa118a8bcac15c87a782dcc5932115ddbe1cd))
+
 ## [0.8.1](https://github.com/blb-ventures/react-flat-list/compare/v0.8.0...v0.8.1) (2023-05-16)
 
 
