@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.1](https://github.com/blb-ventures/react-flat-list/compare/v0.8.0...v0.8.1) (2023-05-16)
+
+
+### Bug Fixes
+
+* fixes flat list subheader classes ([3a2609d](https://github.com/blb-ventures/react-flat-list/commit/3a2609dea4184114dbbbec80f1c8718c711dd82c))
+
 ## [0.8.0](https://github.com/blb-ventures/react-flat-list/compare/v0.7.0...v0.8.0) (2023-05-10)
 
 

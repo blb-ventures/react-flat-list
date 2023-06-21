@@ -4,7 +4,7 @@ export interface FlatListSubHeaderProps {
 }
 
 export const FlatListSubHeader = ({ title, className }: FlatListSubHeaderProps) => (
-  <div className={`flat-list-sub-header ${className ?? ''}`}>
-    <div className="flat-list-sub-header-title">{title}</div>
+  <div className={`flat-list-subheader ${className ?? ''}`}>
+    <div className="flat-list-subheader-title">{title}</div>
   </div>
 );
