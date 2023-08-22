@@ -2,7 +2,7 @@
 
 A React.js component to help render a list of components.
 
-The idea behind this library is to create Item Components that display a single element given a specific data type and can be reused on multiple lists. Or a single behavior that can accept multiple data types.
+The idea behind this library is to create Item Components that display a single element given a specific data type and can be reused on multiple lists. Or a single behavior that can accept multiple data types. It was inspired by [React Native FlatList](https://reactnative.dev/docs/flatlist).
 
 ## Install
 
@@ -15,6 +15,18 @@ pnpm i @blb-ventures/resource
 ```
 
 ## Usage and Examples
+
+Components:
+
+- FlatList: the list wrapper that renders an array of `data` using the `ListItemComponent`;
+- FlatListHeader: A default header to render a title and some `ReactNode` to the right;
+- FlatListSubHeader: A default ListItem with bigger text to separate sections of items;
+- FlatListEmptyMessage: A muted text to render a message when the `data` array is empty;
+- FlatListErrorMessage: A red text to render a message when there was an error trying to load the data;
+- FlatListItem: a default list item;
+- CommonFlatListItemMapper: A base `FlatListItem` that spreads the `data` directly into the `FlatListItem`;
+- ObjectFlatListItem: A helper `FlatListItem` when you have an object and want the items to be mapping over the keys/values of the object; and
+- LinkWrapper: It uses the `LinkComponent` to wrap around the `FlatListItem` content when a `url` is defined.
 
 ### Complete Example
 
