@@ -103,7 +103,7 @@ export const FlatList = <
     LoadingElement,
   ]);
   return (
-    <div className={`flat-list ${className ?? ''} ${loading ? 'flat-list-loading' : ''}`}>
+    <div className={`flat-list ${className ?? ''} ${loading ? 'flat-list-is-loading' : ''}`}>
       {HeaderElement}
       {content}
       {FooterElement}
