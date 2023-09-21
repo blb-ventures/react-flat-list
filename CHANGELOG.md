@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.1](https://github.com/blb-ventures/react-flat-list/compare/v0.10.0...v0.10.1) (2023-09-21)
+
+
+### Bug Fixes
+
+* fixes flat list using the same class as the loading element when loading ([5a5ddd9](https://github.com/blb-ventures/react-flat-list/commit/5a5ddd94c8677e35d5f159e6acd3220fb09a2aef))
+
 ## [0.10.0](https://github.com/blb-ventures/react-flat-list/compare/v0.9.0...v0.10.0) (2023-09-21)
 
 
