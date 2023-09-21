@@ -1,4 +1,4 @@
-import { FC, ReactElement, ReactNode } from 'react';
+import { FC, useMemo } from 'react';
 
 // ExtraType is defined to undefined to avoid breaking types for map components
 // that do not want to use the extra props
@@ -21,13 +21,14 @@ export interface BaseFlatListProps<
   extraClassName?: string;
   data?: DataType[];
   dataKey: Key | ((item: DataType, index: number) => string | number);
-  HeaderComponent?: ReactNode;
-  FooterComponent?: ReactNode;
-  EmptyListComponent?: ReactNode;
-  ErrorComponent?: ReactNode;
+  HeaderElement?: JSX.Element;
+  FooterElement?: JSX.Element;
+  EmptyListElement?: JSX.Element;
+  ErrorElement?: JSX.Element;
+  LoadingElement?: JSX.Element;
   ListItemComponent:
     | FC<FlatListMapItemProps<DataType, ExtraType>>
-    | ((props: FlatListMapItemProps<DataType, ExtraType>) => ReactElement);
+    | ((props: FlatListMapItemProps<DataType, ExtraType>) => JSX.Element);
   // A extra data that is passed to every item
   extra: ExtraType;
   loading?: boolean;
@@ -50,41 +51,62 @@ export const FlatList = <
   ExtraType = Record<string, any>,
 >({
   className,
-  FooterComponent,
-  HeaderComponent,
+  FooterElement,
+  HeaderElement,
   ListItemComponent,
-  EmptyListComponent,
-  ErrorComponent,
+  EmptyListElement,
+  ErrorElement,
+  LoadingElement,
   data,
   dataKey,
   extra,
   loading,
   error,
 }: FlatListProps<DataType, ExtraType, Key>) => {
+  const content = useMemo(() => {
+    if (loading) {
+      return (
+        LoadingElement ?? (
+          <div className="flat-list-loading-container">
+            <div className="flat-list-loading" />
+          </div>
+        )
+      );
+    }
+    if (error && ErrorElement) return ErrorElement;
+    if ((data == null || data.length === 0) && EmptyListElement) return EmptyListElement;
+    return data != null ? (
+      <ul>
+        {data.map((it, idx) => {
+          const key = typeof dataKey === 'string' ? it[dataKey] : dataKey(it, idx);
+          return (
+            <ListItemComponent
+              key={typeof key === 'string' || typeof key === 'number' ? key : idx}
+              collection={data}
+              data={it}
+              extra={extra ?? ({} as ExtraType)}
+              index={idx}
+            />
+          );
+        })}
+      </ul>
+    ) : null;
+  }, [
+    error,
+    ErrorElement,
+    loading,
+    data,
+    EmptyListElement,
+    ListItemComponent,
+    dataKey,
+    extra,
+    LoadingElement,
+  ]);
   return (
     <div className={`flat-list ${className ?? ''} ${loading ? 'flat-list-loading' : ''}`}>
-      {HeaderComponent}
-      {data != null && data.length > 0 && !loading ? (
-        <ul>
-          {data.map((it, idx) => {
-            const key = typeof dataKey === 'string' ? it[dataKey] : dataKey(it, idx);
-            return (
-              <ListItemComponent
-                key={typeof key === 'string' || typeof key === 'number' ? key : idx}
-                collection={data}
-                data={it}
-                extra={extra ?? ({} as ExtraType)}
-                index={idx}
-              />
-            );
-          })}
-        </ul>
-      ) : ErrorComponent != null && error ? (
-        ErrorComponent
-      ) : (
-        EmptyListComponent
-      )}
-      {FooterComponent}
+      {HeaderElement}
+      {content}
+      {FooterElement}
     </div>
   );
 };

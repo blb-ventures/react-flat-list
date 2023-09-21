@@ -110,3 +110,27 @@
   line-height: 1.75rem/* 28px */;
   font-weight: 500;
 }
+
+.flat-list-loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 0;
+}
+
+.flat-list-loading {
+  vertical-align: -0.125em/* 2px */;
+  border: solid 4px rgb(20 20 20);
+  border-right-color: transparent;
+  border-radius: 9999px;
+  animation: spin 1s linear infinite;
+  width: 48px;
+  height: 48px;
+  display: inline-block;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -94,12 +94,12 @@ const TestPage: FC = () => {
     <FlatList
       data={users}
       dataKey="id"
-      EmptyListComponent={<FlatListEmptyMessage>There are no users.</FlatListEmptyMessage>}
+      EmptyListElement={<FlatListEmptyMessage>There are no users.</FlatListEmptyMessage>}
       error={error}
-      ErrorComponent={
+      ErrorElement={
         <FlatListErrorMessage>Error while trying to load users.</FlatListErrorMessage>
       }
-      HeaderComponent={
+      HeaderElement={
         <FlatListHeader
           right={
             <Button
